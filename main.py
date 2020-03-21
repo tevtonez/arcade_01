@@ -5,29 +5,39 @@ from decouple import config
 import arcade
 # Project imports
 
-# Set constants for the screen size
-screen_width = int(config('SCREEN_WIDTH'))
-screen_height = int(config('SCREEN_HEIGHT'))
 
-# Open the window. Set the window title and dimensions (width and height)
-arcade.open_window(screen_width, screen_height, "Drawing Example")
+class MyGame(arcade.Window):
+    """
+    Main application class.
+    """
+
+    def __init__(self):
+
+        # Call the parent class and set up the window
+        super().__init__(
+            int(config('SCREEN_WIDTH', 120)),
+            int(config('SCREEN_HEIGHT', 120)),
+            config('SCREEN_TITLE', 'Error in title')
+        )
+        arcade.set_background_color(arcade.csscolor.CORNFLOWER_BLUE)
+
+    def setup(self):
+        """ Set up the game here. Call this function to restart the game. """
+        pass
+
+    def on_draw(self):
+        """ Render the screen. """
+
+        arcade.start_render()
+        # Code to draw the screen goes here
 
 
-# Set the background color to white.
-# For a list of named colors see:
-# http://arcade.academy/arcade.color.html
-# Colors can also be specified in (red, green, blue) format and
-# (red, green, blue, alpha) format.
-arcade.set_background_color(arcade.color.WHITE)
-
-# Start the render process. This must be done before any drawing commands.
-arcade.start_render()
-
-arcade.draw_text("draw_bitmap", 483, 3, arcade.color.BLACK, 12)
-
-# Finish drawing and display the result
-arcade.finish_render()
+def main():
+    """ Main method """
+    window = MyGame()
+    window.setup()
+    arcade.run()
 
 
-# Keep the window open until the user hits the 'close' button
-arcade.run()
+if __name__ == "__main__":
+    main()
