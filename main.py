@@ -23,6 +23,8 @@ arcade.set_background_color(arcade.color.WHITE)
 # Start the render process. This must be done before any drawing commands.
 arcade.start_render()
 
+arcade.draw_text("draw_bitmap", 483, 3, arcade.color.BLACK, 12)
+
 # Finish drawing and display the result
 arcade.finish_render()
 
