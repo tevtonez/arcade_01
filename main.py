@@ -26,6 +26,7 @@ class MyGame(arcade.Window):
         # These are 'lists' that keep track of our sprites. Each sprite should go into a list.
         self.player_list = None
         self.coins_list = None
+        self.wall_list = None
 
         # Separate variable that holds the player sprite
         self.player_sprite = None
@@ -38,6 +39,7 @@ class MyGame(arcade.Window):
         # Create the Sprite lists
         self.player_list = arcade.SpriteList()
         self.coin_list = arcade.SpriteList()
+        self.wall_list = arcade.SpriteList()
 
         # Set up the character at specific coordinates.
         image_source = "images/player_1/r0.png"
@@ -62,6 +64,10 @@ class MyGame(arcade.Window):
             coin.textures.append(arcade.load_texture(
                 "images/coin/coin_1.png"))
             coin.textures.append(arcade.load_texture(
+                "images/coin/coin_1.png"))
+            coin.textures.append(arcade.load_texture(
+                "images/coin/coin_1.png"))
+            coin.textures.append(arcade.load_texture(
                 "images/coin/coin_2.png"))
             coin.textures.append(arcade.load_texture(
                 "images/coin/coin_3.png"))
@@ -71,8 +77,12 @@ class MyGame(arcade.Window):
                 "images/coin/coin_5.png"))
             coin.textures.append(arcade.load_texture(
                 "images/coin/coin_6.png"))
+            coin.textures.append(arcade.load_texture(
+                "images/coin/coin_1.png"))
+            coin.textures.append(arcade.load_texture(
+                "images/coin/coin_1.png"))
             coin.scale = float(config('COIN_SCALING', 1))
-            coin.cur_texture_index = random.randint(0, len(coin.textures))
+            coin.cur_texture_index = random.randint(2, len(coin.textures)-2)
             self.coin_list.append(coin)
 
     def on_update(self, delta_time):
@@ -88,6 +98,7 @@ class MyGame(arcade.Window):
         # Draw our sprites
         self.player_list.draw()
         self.coin_list.draw()
+        self.wall_list.draw()
 
 
 def main():
