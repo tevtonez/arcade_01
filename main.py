@@ -3,10 +3,8 @@
 import arcade
 from decouple import config
 # Project imports
-from sprites.character import character_sprite
-from sprites.coin import coin_sprite
-
-x = float(1/60)
+from sprite_support.character import character_sprite
+from sprite_support.coin import coin_sprite
 
 
 class MyGame(arcade.Window):
@@ -47,7 +45,22 @@ class MyGame(arcade.Window):
         # Setup coins animated sprite
         coin_sprite.make_coin_sprite(self.coin_list)
 
+        # Create the ground
+        # This shows using a loop to place multiple sprites horizontally
+        for x in range(0, 1650, 53):
+            wall = arcade.Sprite(
+                "images/tiles/ground/tile_ground.png",
+                float(config('TILE_SCALING', 1))
+            )
+            wall.center_x = x
+            wall.center_y = 32
+            self.wall_list.append(wall)
+
         # Walls sprite will be added here
+
+        # Create the 'physics engine'
+        # self.physics_engine = arcade.PhysicsEngineSimple(
+        #     self.player_sprite, self.wall_list)
 
     def on_update(self, delta_time):
         self.coin_list.update()

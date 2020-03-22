@@ -14,7 +14,7 @@ def make_coin_sprite(coin_list):
             int(config('SCREEN_WIDTH', 120))-50,
         )
         coin.center_y = random.randint(
-            50,
+            150,
             int(config('SCREEN_HEIGHT', 120))-50
         )
         coin.textures = []

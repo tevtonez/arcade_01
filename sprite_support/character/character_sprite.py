@@ -11,6 +11,6 @@ def make_player_sprite(player_sprite, player_list):
         image_source,
         float(config('SCALING', 1))
     )
-    player_sprite.center_x = 64
-    player_sprite.center_y = 128
+    player_sprite.center_x = 20
+    player_sprite.center_y = 96
     player_list.append(player_sprite)
