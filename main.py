@@ -1,10 +1,10 @@
 # Python imports
-from decouple import config
-import random
-# Django imports
 # Third-Party imports
 import arcade
+from decouple import config
 # Project imports
+from sprites.character import character_sprite
+from sprites.coin import coin_sprite
 
 x = float(1/60)
 
@@ -30,7 +30,6 @@ class MyGame(arcade.Window):
 
         # Separate variable that holds the player sprite
         self.player_sprite = None
-        self.coin_sprite = None
 
         arcade.set_background_color(arcade.csscolor.CORNFLOWER_BLUE)
 
@@ -42,48 +41,13 @@ class MyGame(arcade.Window):
         self.wall_list = arcade.SpriteList()
 
         # Set up the character at specific coordinates.
-        image_source = "images/player_1/r0.png"
-        self.player_sprite = arcade.Sprite(
-            image_source, float(config('SCALING', 1)))
-        self.player_sprite.center_x = 64
-        self.player_sprite.center_y = 128
-        self.player_list.append(self.player_sprite)
+        character_sprite.make_player_sprite(
+            self.player_sprite, self.player_list)
 
         # Setup coins animated sprite
-        for i in range(20):
-            coin = arcade.AnimatedTimeSprite(x)
-            coin.center_x = random.randint(
-                50,
-                int(config('SCREEN_WIDTH', 120))-50,
-            )
-            coin.center_y = random.randint(
-                50,
-                int(config('SCREEN_HEIGHT', 120))-50
-            )
-            coin.textures = []
-            coin.textures.append(arcade.load_texture(
-                "images/coin/coin_1.png"))
-            coin.textures.append(arcade.load_texture(
-                "images/coin/coin_1.png"))
-            coin.textures.append(arcade.load_texture(
-                "images/coin/coin_1.png"))
-            coin.textures.append(arcade.load_texture(
-                "images/coin/coin_2.png"))
-            coin.textures.append(arcade.load_texture(
-                "images/coin/coin_3.png"))
-            coin.textures.append(arcade.load_texture(
-                "images/coin/coin_4.png"))
-            coin.textures.append(arcade.load_texture(
-                "images/coin/coin_5.png"))
-            coin.textures.append(arcade.load_texture(
-                "images/coin/coin_6.png"))
-            coin.textures.append(arcade.load_texture(
-                "images/coin/coin_1.png"))
-            coin.textures.append(arcade.load_texture(
-                "images/coin/coin_1.png"))
-            coin.scale = float(config('COIN_SCALING', 1))
-            coin.cur_texture_index = random.randint(2, len(coin.textures)-2)
-            self.coin_list.append(coin)
+        coin_sprite.make_coin_sprite(self.coin_list)
+
+        # Walls sprite will be added here
 
     def on_update(self, delta_time):
         self.coin_list.update()
