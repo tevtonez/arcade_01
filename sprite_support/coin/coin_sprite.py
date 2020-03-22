@@ -2,20 +2,20 @@
 import random
 # Third-Party imports
 import arcade
-from decouple import config
+from support import consts
 # Project imports
 
 
 def make_coin_sprite(coin_list):
-    for i in range(int(config('COIN_NUMBER', 20))):
+    for i in range(consts.COIN_NUMBER):
         coin = arcade.AnimatedTimeSprite()
         coin.center_x = random.randint(
             50,
-            int(config('SCREEN_WIDTH', 120))-50,
+            consts.SCREEN_WIDTH-50,
         )
         coin.center_y = random.randint(
             150,
-            int(config('SCREEN_HEIGHT', 120))-50
+            consts.SCREEN_HEIGHT-50
         )
         coin.textures = []
         coin.textures.append(arcade.load_texture(
@@ -38,6 +38,8 @@ def make_coin_sprite(coin_list):
             "images/coin/coin_1.png"))
         coin.textures.append(arcade.load_texture(
             "images/coin/coin_1.png"))
-        coin.scale = float(config('COIN_SCALING', 1))
+        coin.scale = consts.COIN_SCALING
         coin.cur_texture_index = random.randint(2, len(coin.textures)-2)
         coin_list.append(coin)
+
+    return coin_list
