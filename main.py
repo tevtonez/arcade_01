@@ -24,7 +24,7 @@ class MyGame(arcade.Window):
 
         # These are 'lists' that keep track of our sprites. Each sprite should go into a list.
         self.player_list = None
-        self.coins_list = None
+        self.coin_list = None
         self.wall_list = None
 
         # Separate variable that holds the player sprite
@@ -36,6 +36,17 @@ class MyGame(arcade.Window):
         # Used to keep track of our scrolling
         self.view_bottom = 0
         self.view_left = 0
+        self.text_position_x = 0
+        self.text_position_y = 0
+
+        # coins counter (eg points)
+        self.score = 0
+
+        # Load sounds
+        self.collect_coin_sound = arcade.load_sound("sound/coins/coin_1.wav")
+        self.jump_sound = arcade.load_sound("sound/player/jump_1.wav")
+        self.level_back_melody = arcade.load_sound(
+            "sound/background/level_1.wav")
 
         arcade.set_background_color(arcade.csscolor.CORNFLOWER_BLUE)
 
@@ -97,8 +108,8 @@ class MyGame(arcade.Window):
         player_movement_speed = consts.PLAYER_MOVEMENT_SPEED
         if key == arcade.key.UP or key == arcade.key.W:
             if self.physics_engine.can_jump():
-                self.player_sprite.change_y = float(
-                    config('PLAYER_JUMP_SPEED', 20))
+                self.player_sprite.change_y = consts.PLAYER_JUMP_SPEED
+                arcade.play_sound(self.jump_sound)
         elif key == arcade.key.LEFT or key == arcade.key.A:
             self.player_sprite.change_x = -player_movement_speed
         elif key == arcade.key.RIGHT or key == arcade.key.D:
@@ -120,6 +131,19 @@ class MyGame(arcade.Window):
 
         # Move the player with the physics engine
         self.physics_engine.update()
+
+        # See if we hit any coins
+        coin_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
+                                                             self.coin_list)
+
+        # Loop through each coin we hit (if any) and remove it
+        for coin in coin_hit_list:
+            # Remove the coin
+            coin.remove_from_sprite_lists()
+            # Play a sound
+            arcade.play_sound(self.collect_coin_sound)
+            # Add one to the score
+            self.score += 1
 
         # --- Manage Scrolling ---
         # Track if we need to change the viewport
@@ -161,10 +185,22 @@ class MyGame(arcade.Window):
                                 self.view_bottom,
                                 consts.SCREEN_HEIGHT + self.view_bottom)
 
+            # text position
+            self.text_position_x = consts.SCREEN_WIDTH + self.view_left - 950
+            self.text_position_y = consts.SCREEN_HEIGHT + self.view_bottom - 50
+
     def on_draw(self):
         """ Render the screen. """
         # Clear the screen to the background color
         arcade.start_render()
+
+        arcade.draw_text(
+            f"Coins: {self.score}",
+            self.text_position_x,
+            self.text_position_y,
+            arcade.color.WHITE,
+            14,
+        )
 
         # Draw our sprites
         self.player_list.draw()
@@ -176,6 +212,7 @@ def main():
     """ Main method """
     window = MyGame()
     window.setup()
+    arcade.play_sound(window.level_back_melody)
     arcade.run()
 
 
