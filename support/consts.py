@@ -20,3 +20,17 @@ BOTTOM_VIEWPORT_MARGIN = 50
 TOP_VIEWPORT_MARGIN = 100
 
 RESTART_GAME_BUTTON = "R"
+
+BLOCKS_COORDINATES = [
+    [512, 96],
+    [256, 96],
+    [768, 96],
+    [132, 202],
+    [200, 430],
+    [429, 400],
+    [669, 425],
+    [889, 413],
+    [579, 202],
+    [320, 550],
+    [520, 540],
+]
