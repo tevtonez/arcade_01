@@ -197,6 +197,11 @@ class MyGame(arcade.Window):
             self.score_text_position_y,
         )
 
+        utils.draw_esc_hint(
+            self.score_text_position_x,
+            self.score_text_position_y,
+        )
+
         if self.draw_game_over:
             self.block_keys = game_control_utils.finish_game(
                 self.player_sprite,
