@@ -28,6 +28,19 @@ def draw_score(
     )
 
 
+def draw_esc_hint(
+    score_text_position_x,
+    score_text_position_y,
+):
+    arcade.draw_text(
+        "Press [ESC] for menu",
+        score_text_position_x + consts.SCREEN_WIDTH - 220,
+        score_text_position_y,
+        arcade.color.WHITE,
+        12,
+    )
+
+
 def draw_ground_blocks(window_instance):
     # Place multiple block sprites horizontally
     for x in range(0, 1000, 53):
