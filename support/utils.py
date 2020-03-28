@@ -43,7 +43,7 @@ def draw_esc_hint(
 
 def draw_ground_blocks(window_instance):
     # Place multiple block sprites horizontally
-    for x in range(0, 1000, 53):
+    for x in range(0, 1000, 52):
         wall = arcade.Sprite(
             "images/tiles/ground/tile_ground.png",
             consts.TILE_SCALING
